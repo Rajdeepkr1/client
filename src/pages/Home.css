@@ -172,7 +172,7 @@ a.hero-cta {
 .continue-card {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.8rem;
   width: 240px;
   flex-shrink: 0;
@@ -206,6 +206,9 @@ a.hero-cta {
   letter-spacing: 0.04em;
   color: var(--accent-2);
   margin-bottom: 0.25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .read-badge {
