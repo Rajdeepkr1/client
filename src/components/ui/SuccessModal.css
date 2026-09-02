@@ -1,0 +1,38 @@
+.success-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  background: rgba(5, 6, 12, 0.7);
+  backdrop-filter: blur(3px);
+}
+
+.success-modal {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 340px;
+  padding: 2.2rem 1.8rem;
+}
+
+.success-modal-icon {
+  font-size: 2.6rem;
+}
+
+.success-modal h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+}
+
+.success-modal .btn {
+  margin-top: 0.4rem;
+}

@@ -267,6 +267,25 @@ a.hero-cta {
   opacity: 0.35;
 }
 
+.price-badge {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 1;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2em 0.55em;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.16);
+  color: #d8b4fe;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+}
+.price-badge.owned {
+  background: rgba(52, 211, 153, 0.14);
+  color: var(--success);
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
 .card-body {
   display: flex;
   flex-direction: column;

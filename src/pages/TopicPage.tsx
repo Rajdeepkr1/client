@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getSubject, getTopic } from '../api/notes';
+import { ApiError } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useProgress } from '../context/ProgressContext';
+import { usePurchases } from '../context/PurchaseContext';
 import { MarkdownView } from '../components/ui/MarkdownView';
 import { SubjectIcon } from '../components/ui/SubjectIcon';
 import { PageTransition } from '../components/ui/PageTransition';
-import type { SubjectDetail, TopicDetail } from '../types';
+import type { SubjectResponse, TopicDetail } from '../types';
 import './TopicPage.css';
 
 export function TopicPage() {
   const { subject = '', topicId } = useParams<{ subject: string; topicId?: string }>();
   const { isLoggedIn } = useAuth();
   const progress = useProgress();
+  const purchases = usePurchases();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [subjectDetail, setSubjectDetail] = useState<SubjectDetail | null>(null);
+  const [redirectToSubject, setRedirectToSubject] = useState(false);
+  const [subjectDetail, setSubjectDetail] = useState<SubjectResponse | null>(null);
   const [topicDetail, setTopicDetail] = useState<TopicDetail | null>(null);
   const [toggling, setToggling] = useState(false);
 
@@ -25,6 +29,7 @@ export function TopicPage() {
     let cancelled = false;
     setLoading(true);
     setError(null);
+    setRedirectToSubject(false);
     setSubjectDetail(null);
     setTopicDetail(null);
 
@@ -34,10 +39,17 @@ export function TopicPage() {
       .then((data) => {
         if (cancelled) return;
         if (topicId) setTopicDetail(data as TopicDetail);
-        else setSubjectDetail(data as SubjectDetail);
+        else setSubjectDetail(data as SubjectResponse);
       })
-      .catch(() => {
-        if (!cancelled) setError('Could not load this content. It may not exist.');
+      .catch((err) => {
+        if (cancelled) return;
+        if (topicId && err instanceof ApiError && err.status === 403) {
+          // topic is behind a purchase — bounce to the subject page, which
+          // already renders the locked/buy panel
+          setRedirectToSubject(true);
+        } else {
+          setError('Could not load this content. It may not exist.');
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -66,6 +78,10 @@ export function TopicPage() {
     } finally {
       setToggling(false);
     }
+  }
+
+  if (redirectToSubject) {
+    return <Navigate to={`/subjects/${subject}`} replace />;
   }
 
   return (
@@ -129,7 +145,28 @@ export function TopicPage() {
                 </>
               )}
 
-              {subjectDetail && !topicDetail && (
+              {subjectDetail && !topicDetail && subjectDetail.locked && (
+                <div className="locked-panel glass">
+                  <SubjectIcon slug={subjectDetail.slug} size={48} />
+                  <h2>{subjectDetail.title}</h2>
+                  <p className="hint">{subjectDetail.topicCount} topics · purchase to unlock</p>
+                  <div className="locked-price">
+                    {purchases.configured ? `₹${(subjectDetail.price / 100).toFixed(0)}` : 'FREE'}
+                  </div>
+
+                  {isLoggedIn ? (
+                    <Link to={`/checkout/${subjectDetail.slug}`} className="btn btn-primary">
+                      Buy now
+                    </Link>
+                  ) : (
+                    <Link to="/login" className="btn btn-primary">
+                      Log in to buy
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              {subjectDetail && !topicDetail && !subjectDetail.locked && (
                 <>
                   <div className="topic-header">
                     <div className="crumbs">

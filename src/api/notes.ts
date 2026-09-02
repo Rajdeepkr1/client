@@ -1,12 +1,12 @@
 import { api } from './client';
-import type { SearchResult, SubjectDetail, SubjectSummary, TopicDetail } from '../types';
+import type { SearchResult, SubjectResponse, SubjectSummary, TopicDetail } from '../types';
 
 export function getSubjects() {
   return api<{ subjects: SubjectSummary[] }>('/subjects').then((res) => res.subjects);
 }
 
 export function getSubject(slug: string) {
-  return api<SubjectDetail>(`/subjects/${slug}`);
+  return api<SubjectResponse>(`/subjects/${slug}`);
 }
 
 export function getTopic(slug: string, topicId: string) {

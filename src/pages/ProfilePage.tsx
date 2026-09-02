@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useProgress } from '../context/ProgressContext';
+import { usePurchases } from '../context/PurchaseContext';
 import { PageTransition } from '../components/ui/PageTransition';
 import * as postsApi from '../api/posts';
+import { getSubjects } from '../api/notes';
 import { ApiError } from '../api/client';
 import type { Post } from '../types';
 import './ProfilePage.css';
@@ -35,12 +37,22 @@ function formatTimestamp(iso: string) {
 export function ProfilePage() {
   const { user, logout } = useAuth();
   const progress = useProgress();
+  const purchases = usePurchases();
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [content, setContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [subjectTitles, setSubjectTitles] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    getSubjects()
+      .then((subjects) => {
+        setSubjectTitles(Object.fromEntries(subjects.map((s) => [s.slug, s.title])));
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     postsApi
@@ -123,12 +135,14 @@ export function ProfilePage() {
           </div>
 
           <aside className="profile-sidebar glass">
-            <h2>Account</h2>
-            <ul className="profile-sidebar-info">
-              <li>
-                <span aria-hidden="true">✉</span> {user?.email}
-              </li>
-            </ul>
+            <div className="profile-sidebar-section">
+              <h2>Account</h2>
+              <ul className="profile-sidebar-info">
+                <li>
+                  <span aria-hidden="true">✉</span> {user?.email}
+                </li>
+              </ul>
+            </div>
           </aside>
 
           
@@ -145,6 +159,26 @@ export function ProfilePage() {
             </button>
           </div>
           <div className="profile-main">
+            <div className="profile-purchases-section glass">
+              <h2>Purchases</h2>
+              {purchases.purchases.length === 0 ? (
+                <p className="hint">No purchases yet.</p>
+              ) : (
+                <ul className="profile-purchases">
+                  {purchases.purchases.map((p) => (
+                    <li key={p.subject}>
+                      <span className="profile-purchase-title">
+                        {subjectTitles[p.subject] ?? p.subject}
+                      </span>
+                      <span className="profile-purchase-meta">
+                        ₹{(p.amount / 100).toFixed(2)} · {new Date(p.createdAt).toLocaleDateString()}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
             <form className="post-composer glass" onSubmit={handleSubmit}>
               <textarea
                 placeholder="Share your thoughts…"

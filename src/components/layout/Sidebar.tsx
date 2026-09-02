@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { getSubjects } from '../../api/notes';
 import { useAuth } from '../../context/AuthContext';
 import { useProgress } from '../../context/ProgressContext';
+import { usePurchases } from '../../context/PurchaseContext';
 import { SubjectIcon } from '../ui/SubjectIcon';
 import type { SubjectSummary } from '../../types';
 import './Sidebar.css';
@@ -17,6 +18,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const location = useLocation();
   const { isLoggedIn } = useAuth();
   const progress = useProgress();
+  const purchases = usePurchases();
 
   const [subjects, setSubjects] = useState<SubjectSummary[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,6 +68,15 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           {subjects.map((subject) => {
             const isSubjectOpen = expanded.has(subject.slug);
             const isActiveSubject = activeSubject === subject.slug;
+            const topicTag =
+              subject.price !== null && subject.purchased
+                ? { label: '✓ Owned', className: 'owned' }
+                : subject.price !== null
+                  ? {
+                      label: purchases.configured ? `₹${subject.price / 100}` : 'FREE',
+                      className: '',
+                    }
+                  : { label: 'FREE', className: 'free' };
             return (
               <div key={subject.slug} className="subject">
                 <button
@@ -113,6 +124,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                             >
                               <span className={`dot ${isRead ? 'read' : ''}`} />
                               <span className="topic-text">{topic.title}</span>
+                              <span className={`topic-price ${topicTag.className}`}>{topicTag.label}</span>
                               {isBookmarked && <span className="star">★</span>}
                             </Link>
                           </li>

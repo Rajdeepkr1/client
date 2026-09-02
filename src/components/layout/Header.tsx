@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
+import { useWallet } from '../../context/WalletContext';
 import './Header.css';
 
 interface HeaderProps {
@@ -11,6 +12,7 @@ interface HeaderProps {
 export function Header({ onMenuClick }: HeaderProps) {
   const navigate = useNavigate();
   const { user, isLoggedIn, logout } = useAuth();
+  const wallet = useWallet();
   const [query, setQuery] = useState('');
 
   function runSearch(e: FormEvent) {
@@ -52,9 +54,15 @@ export function Header({ onMenuClick }: HeaderProps) {
       <nav className="actions">
         {isLoggedIn ? (
           <>
+            <Link to="/dashboard" className="user-avatar" aria-label="Dashboard" title="Dashboard">
+              <span aria-hidden="true">📊</span>
+            </Link>
             <Link to="/bookmarks" className="btn btn-ghost bookmarks-link">
               <span className="full-label">★ Bookmarks</span>
               <span className="short-label">★</span>
+            </Link>
+            <Link to="/wallet" className="wallet-badge" aria-label="Wallet balance">
+              💰 ₹{(wallet.balance / 100).toFixed(2)}
             </Link>
             <Link
               to="/profile"

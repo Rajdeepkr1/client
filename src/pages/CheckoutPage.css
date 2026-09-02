@@ -1,0 +1,83 @@
+.checkout-page {
+  display: flex;
+  justify-content: center;
+  padding: clamp(2rem, 8vw, 4rem) 1.2rem;
+}
+
+.checkout-card {
+  width: 100%;
+  max-width: 420px;
+  padding: clamp(1.6rem, 6vw, 2.2rem);
+}
+
+.checkout-card h1 {
+  margin: 0 0 1.3rem;
+  font-size: 1.4rem;
+  color: var(--text-strong);
+}
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.2rem;
+}
+
+.checkout-item-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.checkout-item-body h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.checkout-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+}
+
+.checkout-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.checkout-total {
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--text-strong);
+  font-size: 1rem;
+}
+
+.checkout-secured {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.checkout-cancel {
+  display: block;
+  margin-top: 0.9rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.checkout-cancel:hover {
+  color: var(--text);
+  text-decoration: underline;
+}

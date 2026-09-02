@@ -164,10 +164,48 @@
   width: 100%;
 }
 
+.profile-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
 .profile-sidebar h2 {
   margin: 0;
   font-size: 0.95rem;
   color: var(--text-strong);
+}
+
+.profile-purchases {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.profile-purchases li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.profile-purchase-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-purchase-meta {
+  font-size: 0.74rem;
+  color: var(--text-muted);
 }
 
 .profile-sidebar-info {
@@ -194,6 +232,21 @@
   flex-direction: column;
   gap: 1.2rem;
   width: 100%;
+}
+
+/* ---------- purchases (above the post composer) ---------- */
+.profile-purchases-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 1.1rem 1.2rem;
+}
+
+.profile-purchases-section h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-strong);
 }
 
 /* ---------- post composer ---------- */

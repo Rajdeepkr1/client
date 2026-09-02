@@ -7,6 +7,7 @@ import { getSubjectTheme } from '../data/subjectTheme';
 import { PageTransition } from '../components/ui/PageTransition';
 import { useAuth } from '../context/AuthContext';
 import { useProgress } from '../context/ProgressContext';
+import { usePurchases } from '../context/PurchaseContext';
 import type { SubjectSummary } from '../types';
 import './Home.css';
 
@@ -23,6 +24,7 @@ const cardVariant = {
 export function Home() {
   const { isLoggedIn } = useAuth();
   const progress = useProgress();
+  const purchases = usePurchases();
   const [subjects, setSubjects] = useState<SubjectSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -134,6 +136,15 @@ export function Home() {
                       style={{ ['--card-glow' as string]: theme.glow }}
                     >
                       <div className="card-glow" />
+                      {subject.price !== null && (
+                        <span className={`price-badge ${subject.purchased ? 'owned' : ''}`}>
+                          {subject.purchased
+                            ? '✓ Owned'
+                            : purchases.configured
+                              ? `₹${(subject.price / 100).toFixed(0)}`
+                              : 'FREE'}
+                        </span>
+                      )}
                       <SubjectIcon slug={subject.slug} size={56} />
                       <div className="card-body">
                         <h3>{subject.title}</h3>

@@ -1,0 +1,275 @@
+.dashboard-page {
+  padding: clamp(1.2rem, 5vw, 2.6rem) clamp(1.1rem, 5vw, 2rem) 3rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 1.2rem;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 0.3rem;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  color: var(--text-strong);
+}
+
+/* ---------- stats ---------- */
+.dashboard-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 1.6rem;
+}
+
+.stat-tile {
+  flex: 1;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- section heading ---------- */
+.dashboard-section {
+  margin-bottom: 1.6rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 0 0 0.9rem;
+}
+
+/* ---------- continue reading ---------- */
+.dash-continue-row {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  scroll-snap-type: x proximity;
+}
+.dash-continue-row > * {
+  scroll-snap-align: start;
+}
+
+.dash-continue-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 220px;
+  flex-shrink: 0;
+  padding: 0.85rem 1rem;
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.dash-continue-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.dash-continue-body {
+  flex: 1;
+  min-width: 0;
+}
+.dash-continue-body h3 {
+  font-size: 0.88rem;
+  margin: 0;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-subject-tag {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-2);
+  margin-bottom: 0.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-read-badge {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+/* ---------- card grid: owned / wallet / posts ---------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+@media (min-width: 720px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dash-card-wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.dash-card {
+  padding: 1.2rem 1.3rem;
+  margin-bottom: 0;
+}
+
+.dash-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+.dash-card-header .section-title {
+  margin: 0;
+}
+
+.dash-card-link {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--accent-2);
+}
+.dash-card-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- owned subjects list ---------- */
+.dash-owned-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dash-owned-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+.dash-owned-item:hover {
+  background: var(--surface);
+}
+
+.dash-owned-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-owned-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-owned-meta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* ---------- wallet card ---------- */
+.dash-wallet-balance {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin-bottom: 0.8rem;
+}
+
+.dash-tx-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.dash-tx-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.84rem;
+  color: var(--text);
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.dash-tx-list li:last-child {
+  border-bottom: none;
+}
+
+.dash-tx-credit {
+  color: var(--success);
+  font-weight: 700;
+}
+.dash-tx-debit {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+/* ---------- posts card ---------- */
+.dash-posts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.dash-posts-list li {
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.dash-posts-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dash-post-content {
+  margin: 0 0 0.3rem;
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.dash-post-time {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
