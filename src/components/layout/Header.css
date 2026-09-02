@@ -1,0 +1,144 @@
+.header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  padding: 0 1.4rem;
+  border-radius: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.menu-btn span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 800;
+  font-size: 1.08rem;
+  color: var(--text-strong);
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  font-size: 1.2em;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  max-width: 520px;
+  gap: 0.5rem;
+  min-width: 140px;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55em 1em;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.search-btn {
+  padding: 0.5em 1.1em;
+  flex-shrink: 0;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  padding: 0 0.3em;
+}
+
+.short-label {
+  display: none;
+}
+
+/* ---------- tablet: show the hamburger, hide long labels ---------- */
+@media (max-width: 960px) {
+  .menu-btn {
+    display: flex;
+  }
+}
+
+/* ---------- mobile: search drops to its own full-width row ---------- */
+@media (max-width: 640px) {
+  .header {
+    height: auto;
+    padding: 0.7rem 1rem;
+    row-gap: 0.6rem;
+  }
+
+  .brand span:last-child {
+    display: none; /* keep just the ◆ mark to save space */
+  }
+
+  .search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .search-btn {
+    padding: 0.5em 0.9em;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .full-label {
+    display: none;
+  }
+  .short-label {
+    display: inline;
+  }
+
+  .actions {
+    gap: 0.4rem;
+  }
+
+  .actions .btn {
+    padding: 0.55em 0.85em;
+    font-size: 0.82rem;
+  }
+}

@@ -1,0 +1,87 @@
+.home {
+  padding: clamp(1.5rem, 5vw, 3.2rem) clamp(1.1rem, 5vw, 2.6rem) 3rem;
+  max-width: 1180px;
+}
+
+.hero h1 {
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 0.6rem;
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+  margin: 0 0 2rem;
+}
+
+.subtitle strong {
+  color: var(--text-strong);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.1rem;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.subject-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.3rem 1.4rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+}
+
+.card-glow {
+  position: absolute;
+  inset: -40% -40% auto auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--card-glow);
+  filter: blur(50px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.subject-card:hover .card-glow {
+  opacity: 0.35;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.card-body h2 {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
