@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { TopicPage } from './pages/TopicPage';
 import { SearchPage } from './pages/SearchPage';
 import { BookmarksPage } from './pages/BookmarksPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 
@@ -26,6 +27,14 @@ function AnimatedRoutes() {
             element={
               <ProtectedRoute>
                 <BookmarksPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
