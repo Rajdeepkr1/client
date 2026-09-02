@@ -88,33 +88,13 @@ export function Home() {
             )}
           </div>
 
-          {!loading && subjects.length >= 3 && (
-            <div className="hero-graphic" aria-hidden="true">
-              {subjects.slice(0, 3).map((subject, i) => (
-                <motion.div
-                  key={subject.slug}
-                  className={`floating-card glass floating-card-${i}`}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: [0, -10, 0] }}
-                  transition={{
-                    opacity: { duration: 0.4, delay: 0.15 * i },
-                    y: {
-                      duration: 3.4 + i * 0.4,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: 0.15 * i,
-                    },
-                  }}
-                >
-                  <SubjectIcon slug={subject.slug} size={34} />
-                  <div>
-                    <h4>{subject.title}</h4>
-                    <span>{subject.topicCount} topics</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
+          <div className="hero-graphic" aria-hidden="true">
+            <img
+              className="hero-photo"
+              src="https://res.cloudinary.com/highereducation/image/upload/c_scale,w_750/f_auto,fl_lossy,q_auto:eco/v1532988864/TheBestColleges.org/images/study-notebooks.jpg"
+              alt=""
+            />
+          </div>
         </motion.div>
 
         {isLoggedIn && continueItems.length > 0 && (
