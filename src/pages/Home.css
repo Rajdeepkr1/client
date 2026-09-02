@@ -3,6 +3,18 @@
   max-width: 1180px;
 }
 
+/* ---------- hero banner (mobile: stacked, no graphic) ---------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content {
+  min-width: 0;
+}
+
 .hero h1 {
   font-size: clamp(1.7rem, 5vw, 2.6rem);
   line-height: 1.15;
@@ -11,34 +23,208 @@
   letter-spacing: -0.02em;
 }
 
+.hero-graphic {
+  display: none;
+}
+
 .subtitle {
   color: var(--text-muted);
   font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-  margin: 0 0 2rem;
+  margin: 0 0 1.3rem;
 }
 
-.subtitle strong {
+/* ---------- stats bar ---------- */
+.stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 0 0 1.4rem;
+}
+
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 88px;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 800;
   color: var(--text-strong);
 }
 
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hero-cta {
+  margin-top: 0.4rem;
+}
+
+/* ---------- hero banner (desktop: two columns, floating cards) ---------- */
+@media (min-width: 900px) {
+  .hero {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-content {
+    flex: 1;
+  }
+
+  .hero-graphic {
+    display: block;
+    position: relative;
+    flex: 0 0 300px;
+    height: 260px;
+  }
+
+  .floating-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 220px;
+    padding: 0.8rem 1rem;
+    pointer-events: none;
+  }
+
+  .floating-card h4 {
+    font-size: 0.86rem;
+    margin: 0;
+    color: var(--text-strong);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .floating-card span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .floating-card-0 {
+    top: 0;
+    right: 40px;
+    transform: rotate(-4deg);
+  }
+
+  .floating-card-1 {
+    top: 90px;
+    right: 0;
+    transform: rotate(3deg);
+  }
+
+  .floating-card-2 {
+    top: 180px;
+    right: 60px;
+    transform: rotate(-2deg);
+  }
+}
+
+/* ---------- section headings ---------- */
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 2rem 0 0.9rem;
+}
+
+/* ---------- continue reading row ---------- */
+.continue-section {
+  margin: 0 0 0.4rem;
+}
+
+.continue-row {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.continue-row > * {
+  scroll-snap-align: start;
+}
+
+.continue-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 240px;
+  flex-shrink: 0;
+  padding: 0.9rem 1.1rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.continue-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.continue-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.continue-body h3 {
+  font-size: 0.92rem;
+  margin: 0;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subject-tag {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-2);
+  margin-bottom: 0.25em;
+}
+
+.read-badge {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+/* ---------- subject grid ---------- */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.1rem;
 }
 
-@media (max-width: 480px) {
+@media (min-width: 481px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 
 .subject-card {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
-  padding: 1.3rem 1.4rem;
+  text-align: center;
+  gap: 0.7rem;
+  padding: 1.6rem 1.2rem;
   overflow: hidden;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -68,20 +254,23 @@
 .card-body {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.3rem;
   min-width: 0;
+  width: 100%;
 }
 
-.card-body h2 {
-  font-size: 1rem;
+.card-body h3 {
+  font-size: 0.95rem;
   margin: 0;
   color: var(--text-strong);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 100%;
 }
 
 .count {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }

@@ -28,7 +28,7 @@ export function Header({ onMenuClick }: HeaderProps) {
         <span />
       </button>
 
-      <Link to="/" className="brand">
+      <Link to="/" className="brand" aria-label="Dev Notes">
         <span className="brand-mark gradient-text">◆</span>
         <span>Dev Notes</span>
       </Link>

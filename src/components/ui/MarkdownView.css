@@ -2,19 +2,7 @@
   max-width: 860px;
   line-height: 1.7;
   color: var(--text);
-  font-size: 15.5px;
-}
-
-@media (max-width: 480px) {
-  .markdown-body {
-    font-size: 14.5px;
-  }
-  .markdown-body h1 {
-    font-size: 1.4rem;
-  }
-  .markdown-body h2 {
-    font-size: 1.15rem;
-  }
+  font-size: 14.5px;
 }
 
 .markdown-body > *:first-child {
@@ -32,13 +20,13 @@
 }
 
 .markdown-body h1 {
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.4em;
 }
 
 .markdown-body h2 {
-  font-size: 1.32rem;
+  font-size: 1.15rem;
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.35em;
 }
@@ -46,6 +34,18 @@
 .markdown-body h3 {
   font-size: 1.08rem;
   color: #d8b4fe;
+}
+
+@media (min-width: 481px) {
+  .markdown-body {
+    font-size: 15.5px;
+  }
+  .markdown-body h1 {
+    font-size: 1.7rem;
+  }
+  .markdown-body h2 {
+    font-size: 1.32rem;
+  }
 }
 
 .markdown-body p {

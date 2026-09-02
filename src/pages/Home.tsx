@@ -5,6 +5,8 @@ import { getSubjects } from '../api/notes';
 import { SubjectIcon } from '../components/ui/SubjectIcon';
 import { getSubjectTheme } from '../data/subjectTheme';
 import { PageTransition } from '../components/ui/PageTransition';
+import { useAuth } from '../context/AuthContext';
+import { useProgress } from '../context/ProgressContext';
 import type { SubjectSummary } from '../types';
 import './Home.css';
 
@@ -19,6 +21,8 @@ const cardVariant = {
 } as const;
 
 export function Home() {
+  const { isLoggedIn } = useAuth();
+  const progress = useProgress();
   const [subjects, setSubjects] = useState<SubjectSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,6 +34,13 @@ export function Home() {
 
   const totalTopics = useMemo(() => subjects.reduce((sum, s) => sum + s.topicCount, 0), [subjects]);
 
+  const continueItems = useMemo(() => {
+    return progress.items
+      .filter((p) => p.read || p.bookmarked)
+      .sort((a, b) => (b.updatedAt ?? b.createdAt ?? '').localeCompare(a.updatedAt ?? a.createdAt ?? ''))
+      .slice(0, 6);
+  }, [progress.items]);
+
   return (
     <PageTransition>
       <div className="home">
@@ -39,43 +50,121 @@ export function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1>
-            Every deep-dive, <span className="gradient-text">in one place</span>.
-          </h1>
-          <p className="subtitle">
-            {loading ? (
-              'Loading your topic library…'
-            ) : (
-              <>
-                <strong>{subjects.length}</strong> subjects · <strong>{totalTopics}</strong> topics
-                — search, bookmark, and track what you've read.
-              </>
+          <div className="hero-content">
+            <h1>
+              Every deep-dive, <span className="gradient-text">in one place</span>.
+            </h1>
+            <p className="subtitle">Search, bookmark, and track what you've read.</p>
+
+            {!loading && (
+              <div className="stats-bar">
+                <div className="stat-tile">
+                  <span className="stat-value">{subjects.length}</span>
+                  <span className="stat-label">Subjects</span>
+                </div>
+                <div className="stat-tile">
+                  <span className="stat-value">{totalTopics}</span>
+                  <span className="stat-label">Topics</span>
+                </div>
+                {isLoggedIn && (
+                  <>
+                    <div className="stat-tile">
+                      <span className="stat-value">{progress.readCount}</span>
+                      <span className="stat-label">Read</span>
+                    </div>
+                    <div className="stat-tile">
+                      <span className="stat-value">{progress.bookmarked.length}</span>
+                      <span className="stat-label">Bookmarked</span>
+                    </div>
+                  </>
+                )}
+              </div>
             )}
-          </p>
+
+            {!isLoggedIn && (
+              <Link to="/register" className="btn btn-primary hero-cta">
+                Sign up free
+              </Link>
+            )}
+          </div>
+
+          {!loading && subjects.length >= 3 && (
+            <div className="hero-graphic" aria-hidden="true">
+              {subjects.slice(0, 3).map((subject, i) => (
+                <motion.div
+                  key={subject.slug}
+                  className={`floating-card glass floating-card-${i}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: [0, -10, 0] }}
+                  transition={{
+                    opacity: { duration: 0.4, delay: 0.15 * i },
+                    y: {
+                      duration: 3.4 + i * 0.4,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: 0.15 * i,
+                    },
+                  }}
+                >
+                  <SubjectIcon slug={subject.slug} size={34} />
+                  <div>
+                    <h4>{subject.title}</h4>
+                    <span>{subject.topicCount} topics</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </motion.div>
 
-        {!loading && (
-          <motion.div className="grid" variants={container} initial="hidden" animate="show">
-            {subjects.map((subject) => {
-              const theme = getSubjectTheme(subject.slug);
-              return (
-                <motion.div key={subject.slug} variants={cardVariant}>
+        {isLoggedIn && continueItems.length > 0 && (
+          <div className="continue-section">
+            <h2 className="section-title">Continue reading</h2>
+            <motion.div className="continue-row" variants={container} initial="hidden" animate="show">
+              {continueItems.map((it) => (
+                <motion.div key={`${it.subject}-${it.topicId}`} variants={cardVariant}>
                   <Link
-                    to={`/subjects/${subject.slug}`}
-                    className="subject-card glass"
-                    style={{ ['--card-glow' as string]: theme.glow }}
+                    to={`/subjects/${it.subject}/topics/${it.topicId}`}
+                    className="continue-card glass"
                   >
-                    <div className="card-glow" />
-                    <SubjectIcon slug={subject.slug} size={48} />
-                    <div className="card-body">
-                      <h2>{subject.title}</h2>
-                      <span className="count">{subject.topicCount} topics</span>
+                    <SubjectIcon slug={it.subject} size={38} />
+                    <div className="continue-body">
+                      <span className="subject-tag">{it.subjectTitle}</span>
+                      <h3>{it.topicTitle}</h3>
                     </div>
+                    {it.read && <span className="read-badge">✓ read</span>}
                   </Link>
                 </motion.div>
-              );
-            })}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        )}
+
+        {!loading && (
+          <>
+            <h2 className="section-title">Browse subjects</h2>
+            <motion.div className="grid" variants={container} initial="hidden" animate="show">
+              {subjects.map((subject) => {
+                const theme = getSubjectTheme(subject.slug);
+                return (
+                  <motion.div key={subject.slug} variants={cardVariant}>
+                    <Link
+                      to={`/subjects/${subject.slug}`}
+                      className="subject-card glass"
+                      style={{ ['--card-glow' as string]: theme.glow }}
+                    >
+                      <div className="card-glow" />
+                      <SubjectIcon slug={subject.slug} size={56} />
+                      <div className="card-body">
+                        <h3>{subject.title}</h3>
+                        <span className="count">{subject.topicCount} topics</span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </>
         )}
       </div>
     </PageTransition>

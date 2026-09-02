@@ -39,6 +39,12 @@
 .topic-actions {
   display: flex;
   gap: 0.5rem;
+  width: 100%;
+}
+.topic-actions .btn {
+  flex: 1;
+  padding: 0.55em 0.7em;
+  font-size: 0.82rem;
 }
 
 .star-btn.active {
@@ -55,13 +61,13 @@
   text-decoration: underline;
 }
 
-@media (max-width: 480px) {
+@media (min-width: 481px) {
   .topic-actions {
-    width: 100%;
+    width: auto;
   }
   .topic-actions .btn {
-    flex: 1;
-    padding: 0.55em 0.7em;
-    font-size: 0.82rem;
+    flex: none;
+    padding: 0.65em 1.3em; /* matches .btn default in index.css */
+    font-size: 0.88rem; /* matches .btn default in index.css */
   }
 }

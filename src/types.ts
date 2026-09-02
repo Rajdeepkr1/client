@@ -42,6 +42,8 @@ export interface ProgressItem {
   topicTitle: string;
   read: boolean;
   bookmarked: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface AuthUser {

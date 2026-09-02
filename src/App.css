@@ -19,19 +19,19 @@
   min-width: 0; /* let long content shrink instead of forcing horizontal scroll on the page */
 }
 
+/* ---------- mobile (base): sidebar is an off-canvas drawer ---------- */
 .sidebar-backdrop {
-  display: none;
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 12, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 25;
 }
 
-/* ---------- mobile: sidebar becomes an off-canvas drawer ---------- */
-@media (max-width: 960px) {
+@media (min-width: 961px) {
   .sidebar-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 6, 12, 0.6);
-    backdrop-filter: blur(2px);
-    z-index: 25;
+    display: none;
   }
 }
 
@@ -53,37 +53,51 @@
   will-change: transform;
 }
 
+/* ---------- mobile (base): smaller, cheaper blobs ---------- */
 .blob-1 {
-  width: 520px;
-  height: 520px;
+  width: 260px;
+  height: 260px;
+  filter: blur(60px);
   top: -160px;
   left: -100px;
   background: #8b5cf6;
 }
 
 .blob-2 {
-  width: 460px;
-  height: 460px;
+  width: 260px;
+  height: 260px;
+  filter: blur(60px);
   bottom: -180px;
   right: -80px;
   background: #06b6d4;
 }
 
 .blob-3 {
-  width: 360px;
-  height: 360px;
+  width: 260px;
+  height: 260px;
+  filter: blur(60px);
   top: 40%;
   left: 55%;
   background: #ec4899;
   opacity: 0.22;
 }
 
-@media (max-width: 640px) {
-  .blob-1,
-  .blob-2,
+@media (min-width: 641px) {
+  .blob-1 {
+    width: 520px;
+    height: 520px;
+    filter: blur(90px);
+  }
+
+  .blob-2 {
+    width: 460px;
+    height: 460px;
+    filter: blur(90px);
+  }
+
   .blob-3 {
-    width: 260px;
-    height: 260px;
-    filter: blur(60px);
+    width: 360px;
+    height: 360px;
+    filter: blur(90px);
   }
 }
