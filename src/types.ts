@@ -51,3 +51,10 @@ export interface AuthUser {
   name: string;
   email: string;
 }
+
+export interface Post {
+  _id: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}

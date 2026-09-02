@@ -56,8 +56,13 @@ export function Header({ onMenuClick }: HeaderProps) {
               <span className="full-label">★ Bookmarks</span>
               <span className="short-label">★</span>
             </Link>
-            <Link to="/profile" className="user-name">
-              {user?.name}
+            <Link
+              to="/profile"
+              className="user-avatar"
+              aria-label={user?.name ? `${user.name}'s profile` : 'Profile'}
+              title={user?.name}
+            >
+              <span aria-hidden="true">👤</span>
             </Link>
             <button className="btn btn-ghost" onClick={logout}>
               Log out
